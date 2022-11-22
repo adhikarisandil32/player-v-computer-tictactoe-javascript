@@ -1,0 +1,1 @@
+//tictactoe1.js is code a slightly revised code of two-player-tactactoe-using-javascipt code. tictactoe2.js is completely newly written code.
