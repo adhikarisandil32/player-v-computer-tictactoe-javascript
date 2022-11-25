@@ -37,7 +37,7 @@ function mainFunction(){
         boxClicked = this.classList[1];
     }
     else{
-        //this is a div tag created just to stop terminating computers turn happening because computer's turn doesn't come through clickFiring of mainFunction
+        //this is a div tag created just to stop terminating computers turn, happening because computer's turn doesn't come through clickFiring of mainFunction
         boxClicked = "to-trick-boxClicked";
     }
     //valueAlreadyExists(parameter) is a function that checks if a clicked square already contains some value
