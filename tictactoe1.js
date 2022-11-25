@@ -1,12 +1,13 @@
 //I bet this code can be done in simpler fashion. Because i wanted to do it by not rewriting entire code but by editing previously written code for 2 player mode. That's why it seems very lengthy.
 
 $ = document.querySelectorAll(".box");
-let click = 1;
-let text = [];
-let gameOver = false;
+let click = 1; //to count the number of clicks
+let gameOver = false; //initially the game isn't over
 let count = 1;
-let random_position;
-let tempText = [];
+let text = []; //to store innerTexts to check for win
+let random_position; // to pick random position for computer's turn
+let tempText = []; //to temporarily store the bord array innerTexts
+let turn = ""; //to store whose turn it is
 
 for(i = 0; i < 9; i++){
     $[i].addEventListener("click", mainFunction);
@@ -14,9 +15,9 @@ for(i = 0; i < 9; i++){
 
 document.getElementsByClassName("reset-button-container")[0].addEventListener("click", reset);
 
+//reset everything to it's initial state
 function reset(){
     click = 1;
-    text = [];
     gameOver = false;
     count = 1;
     for (i = 0; i < 9; i++){
@@ -25,19 +26,27 @@ function reset(){
     document.getElementsByClassName("win-message")[0].innerText = "";
     random_position;
     tempText = [];
+    turn = "";
+    text = [];
 }
 
 function mainFunction(){
-    boxClicked = this.classList[1];
 
+    //if-else because boxClicked doesn't have any value if fired automatically without click;
+    if(click % 2 == 1){
+        boxClicked = this.classList[1];
+    }
+    else{
+        //this is a div tag created just to stop terminating computers turn happening because computer's turn doesn't come through clickFiring of mainFunction
+        boxClicked = "to-trick-boxClicked";
+    }
     //valueAlreadyExists(parameter) is a function that checks if a clicked square already contains some value
     if (valueAlreadyExists(boxClicked) == true){
         if(gameOver == false){
             alert("Value Already Exists! Please Click Different Square!!");
         }
     }
-    else if (valueAlreadyExists(boxClicked) == false){
-
+    else{
         if (gameOver != true){
 
             if (checkForTurn(click) == "O"){
@@ -46,9 +55,9 @@ function mainFunction(){
                     tempText[i] = $[i-1].innerText;
                 }
                 
+                //picking any random position
                 random_position = Math.floor(Math.random()*9 + 1);
 
-                
                 //create loop until it finds a random position that is blank
                 while(tempText[random_position] != ""){
                     random_position = Math.floor(Math.random()*9 + 1);
@@ -61,17 +70,18 @@ function mainFunction(){
                 for(i = 1; i <= 9; i++){
                     $[i-1].innerText = tempText[i];
                 }
-                turn = "O"; //specially required for win message
+                turn = "O"; //specially required for displaying win message
                 click += 1; //stores number of clicks on empty squares
             }
             else{
                 //similar to that of 2 player mode
-                turn = checkForTurn(click);
-                this.innerText = turn;
-                click += 1; //stores number of clicks on empty squares
-
-                //automate the computer's turn whenever click is even
-                
+                this.innerText = checkForTurn(click);
+                turn = "X"; //for ein-message
+                checkForWin();
+                click += 1; // stores number of clicks on empty squares
+                if (click % 2 == 0){
+                    setTimeout(mainFunction, 1000); //mainFunction needs to be fired automatically for computer's turn and delayed by 1 second to look like its thinking;
+                }
             }
         }
     }
@@ -84,8 +94,8 @@ function mainFunction(){
         }
     }
 
-    //if click is equal to 9 and there is no win, the game is drawn as well
-    if(click == 10){ // try click == 9, try and draw a game and see
+    //if click is equal to 10 and there is no win, the game is drawn as well
+    if(click == 10 && checkForWin() == false){
         gameOver = true;
         document.getElementsByClassName("win-message")[0].innerText = "Game Drawn";
     }
