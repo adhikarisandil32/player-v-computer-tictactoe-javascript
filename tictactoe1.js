@@ -77,7 +77,7 @@ function mainFunction(){
                 //similar to that of 2 player mode
                 this.innerText = checkForTurn(click);
                 turn = "X"; //for ein-message
-                checkForWin();
+                checkForWin(); //because if not turn slips again for "O"
                 click += 1; // stores number of clicks on empty squares
                 if (click % 2 == 0){
                     setTimeout(mainFunction, 1000); //mainFunction needs to be fired automatically for computer's turn and delayed by 1 second to look like its thinking;
