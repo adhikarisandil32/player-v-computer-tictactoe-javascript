@@ -72,11 +72,11 @@ function checkForGameOver(){
     }
     //if none of above, which is for win only, is true, check for draw which can be done by filtering the remaining blank squares. If no squares are lest, then game is a draw else the game isn't over yet.
     else{
-        numberOfBlankCharacters = tempText.filter(element => {
+        arrayOfBlankCharacters = tempText.filter(element => {
             return (element === "");
         });
 
-        if (numberOfBlankCharacters.length === 0){
+        if (arrayOfBlankCharacters.length === 0){
             document.querySelector(".win-message").innerText = "Game Drawn!!";
             return true;
         }
