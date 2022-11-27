@@ -27,11 +27,8 @@ function mainFunction(e){
 //a function that randomly plays computers turn
 //this is where the minimax happens
 function computerTurn(){
-    randomPosition = Math.floor(Math.random()*9);
-    while ($[randomPosition].innerText !== "" && checkForGameOver() === false){
-        randomPosition = Math.floor(Math.random()*9);
-    }
-    $[randomPosition].innerText = "O";
+    
+    
 }
 
 //function to check if game is over. But I think it can be written more easily.
@@ -94,4 +91,17 @@ function reset(){
         $[i-1].innerText = "";
     }
     document.querySelector(".win-message").innerText = "";
+}
+
+//function to create 1d array to 2d array => useful for computerTurn() function to access board in 2d view
+function convertToTwoDimension(initialArray, rows, columns){
+    var k = 0, finalArray = [];
+    for(i = 0; i < initialArray.length/columns; i++){
+        finalArray[i] = []; //state that each element of finalArray is also an array
+        for(j = 0; j < initialArray.length/rows; j++){
+            finalArray[i][j] = initialArray[k];
+            k += 1;
+        }
+    }
+    return finalArray;
 }
