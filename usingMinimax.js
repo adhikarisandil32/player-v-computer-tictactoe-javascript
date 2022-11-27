@@ -3,9 +3,9 @@
 $ = document.querySelectorAll(".box");
 
 // adding click event to all boxes
-for(i = 1; i <= 9; i++){
-    $[i-1].addEventListener("click", mainFunction);
-}
+$.forEach((element)=>{
+    element.addEventListener("click", mainFunction);
+})
 
 document.querySelector(".reset-button-container").addEventListener("click", reset);
 
