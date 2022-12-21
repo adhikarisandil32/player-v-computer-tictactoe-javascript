@@ -1,4 +1,7 @@
+//minimax with alpha beta pruning;
+
 $ = document.querySelectorAll(".box");
+let count = 0;
 
 // adding click event to all boxes
 $.forEach(element => {
@@ -23,22 +26,31 @@ function mainFunction(e){
             displayWinMessage(); //display Win Message, necessary for player
         }
     }
+    //to display how many iterations it went through to get the best move.
+    console.log(count);
+    count = 0;
 }
 
 //a function that randomly plays computers turn
 //this is where the first minimax is
 function computerTurn(){
     let board = getBoard();
-    let depth = 1, bestScore = Infinity, bestMove;
-    
+    let depth = 1, bestScore = Infinity, bestMove, alpha = -Infinity, beta = Infinity;
     for(let i = 0; i < 9; i++){
         if (board[i] === ""){
             board[i] = "O";
-            let score = minimax(board, true, depth+1);
+            count++;
+            let score = minimax(board, true, depth+1, alpha, beta);
             board[i] = "";
             if (score < bestScore){
                 bestScore = score;
                 bestMove = i;
+            }
+            if (score <= beta){
+                beta = score;
+            }
+            if (beta <= alpha){
+              break;
             }
         }
     }
@@ -53,7 +65,7 @@ function computerTurn(){
 }
 
 //minimax function
-function minimax(position, maximizing, depth){
+function minimax(position, maximizing, depth, alpha, beta){
 
     // if checkForGameOver() === undefnied, game is not over
     if (checkForGameOver(position) !== undefined){
@@ -75,10 +87,17 @@ function minimax(position, maximizing, depth){
         for(let i = 0; i < 9; i++){
             if(position[i] === ""){
                 position[i] = "X";
-                let score = minimax(position, false, depth+1);
+                count++;
+                let score = minimax(position, false, depth+1, alpha, beta);
                 position[i] = "";
                 if (score > bestScore){
                     bestScore = score;
+                }
+                if (score >= alpha){
+                    alpha = score;
+                }
+                if (beta <= alpha){
+                    break;
                 }
             }
         }
@@ -90,10 +109,17 @@ function minimax(position, maximizing, depth){
         for(let i = 0; i < 9; i++){
             if(position[i] === ""){
                 position[i] = "O";
-                let score = minimax(position, true, depth+1);
+                count++;
+                let score = minimax(position, true, depth+1, alpha, beta);
                 position[i] = "";
                 if (score < bestScore){
                     bestScore = score;
+                }
+                if (score <= beta){
+                    beta = score;
+                }
+                if (beta <= alpha){
+                    break;
                 }
             }
         }
