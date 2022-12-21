@@ -44,12 +44,12 @@ function computerTurn(){
     }
     board[bestMove] = "O"; //computer making the move
     //displaying the move in the screen
-    for(let i = 0; i < 9; i++){
-        $[i].innerText = board[i];
-    }
-    // board.forEach((element, index) => {
-    //     document.querySelectorAll(".box")[index].innerText = element;
-    // });
+    // for(let i = 0; i < 9; i++){
+    //     $[i].innerText = board[i];
+    // }
+    board.forEach((element, index) => {
+        $[index].innerText = element;
+    });
 }
 
 //minimax function
