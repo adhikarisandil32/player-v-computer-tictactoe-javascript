@@ -24,7 +24,6 @@ function mainFunction(e){
             displayWinMessage(); //display Win Message, necessary for player
         }
     }
-    console.log(count);
     count = 0;
 }
 
